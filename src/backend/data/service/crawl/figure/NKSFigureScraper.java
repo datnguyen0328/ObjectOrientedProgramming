@@ -26,7 +26,7 @@ public class NKSFigureScraper {
 		Document doc;
 		while (true) {
 			// 1450
-			if (urlCounter > 1450)
+			if (urlCounter > 5)
 				break;
 			if (urlCounter == 0)
 				url = "https://nguoikesu.com/nhan-vat";

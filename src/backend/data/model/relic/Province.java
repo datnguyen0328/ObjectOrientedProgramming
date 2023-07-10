@@ -3,7 +3,11 @@ package backend.data.model.relic;
 public class Province {
     private String province;
 
-    public String getProvince() {
+    public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getProvince() {
     	return this.province;
     }
 

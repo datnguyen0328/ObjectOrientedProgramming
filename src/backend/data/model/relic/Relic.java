@@ -12,6 +12,30 @@ public class Relic extends Type implements IObject {
 	private String desc;
 	private String id;
 	private ArrayList<Figure> figures = new ArrayList<Figure>();
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setFigures(ArrayList<Figure> figures) {
+		this.figures = figures;
+	}
 
 	public String getName() {
 		return name.replace(name.substring(0, 1), name.substring(0, 1).toUpperCase());

@@ -115,7 +115,7 @@ public class MainView extends JFrame {
 		mainPanel.add(menuPanel, BorderLayout.NORTH);
 		menuPanel.setLayout(new BorderLayout(0, 0));
 
-		JLabel menuLabel = new JLabel("LỊCH SỬ");
+		JLabel menuLabel = new JLabel("SỬ VIỆT");
 		menuLabel.setBorder(new EmptyBorder(0, 0, 0, 40));
 		menuLabel.setIcon(new ImageIcon(Constant.HISTORY_ICON));
 		menuLabel.setForeground(Color.WHITE);

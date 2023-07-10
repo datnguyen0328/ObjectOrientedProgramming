@@ -35,8 +35,8 @@ public class VSFigureScraper {
 		String url;
 		Document doc;
 		while (true) {
-			
-			if (urlCounter > 119)
+			//119
+			if (urlCounter > 5)
 				break;
 //			urlCounter=110;
 			if (urlCounter == 0)
