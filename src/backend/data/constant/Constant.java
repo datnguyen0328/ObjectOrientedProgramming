@@ -12,6 +12,7 @@ public class Constant {
 	
 	//panel
 	public static final String HUMAN_PANEL_NAME = "humanPanel";
+	
 	public static final String KING_PANEL_NAME = "kingPanel";
 	public static final String POINSETTIA_PANEL_NAME = "poinsettiaPanel";
 	public static final String EVENT_PANEL_NAME = "eventPanel";
