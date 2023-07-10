@@ -1,11 +1,12 @@
 package backend.data.model.event;
 
+import backend.data.model.IObject;
 import backend.data.model.dynasty.*;
 import backend.data.model.figure.*;
 
 import java.util.ArrayList;
 
-public class Event extends EventInit {
+public class Event extends EventInit{
     private ArrayList<Figure> relatedFigsDetails;
     private Dynasty dynastyDetails;
 	
@@ -34,18 +35,12 @@ public class Event extends EventInit {
     
     @Override
     public ArrayList<Figure> getFigures(){
-    	return relatedFigsDetails;
+    	return this.getRelatedFigsDetails();
     }
-
-//    @Override
-//    public String toString(){
-//        StringBuilder str = new StringBuilder(this.getId()  + " " + this.getName() + " " + this.getTime() + " " + this.getLocation()
-//                + " " + this.getDescription());
-//        this.getRelatedFigsDetails().forEach(f ->{
-//            str.append(f.toString());
-//        });
-//        str.append(this.getDynastyDetails().toString());
-//        return str.toString();
-//    }
     
+	@Override
+	public String getDesc() {
+		// TODO Auto-generated method stub
+		return super.getDescription().toString();
+	}
 }

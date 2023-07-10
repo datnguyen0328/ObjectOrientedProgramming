@@ -26,6 +26,7 @@ import com.google.gson.reflect.TypeToken;
 //import objects.Poinsettia;
 import backend.data.model.*;
 import backend.data.model.dynasty.Dynasty;
+import backend.data.model.event.Event;
 import backend.data.model.figure.Figure;
 import backend.data.model.figure.King;
 import backend.data.model.figure.Poinsettia;
@@ -228,12 +229,12 @@ public class HelperFunctions {
 		return content.toString();
 	}
 
-	public static ArrayList<String> extractDynasty(String input, ArrayList<Dynasty> refDynastiesList) {
+	public static ArrayList<String> extractDynasty(String input, ArrayList<String> refDynastiesList) {
 		ArrayList<String> resDynasties = new ArrayList<>();
 		if (input.contains("vua Lê chúa Trịnh")) {
-			for (Dynasty dynasty : refDynastiesList) {
-				if (dynasty.getName().equals("Trịnh Nguyễn Phân Tranh"))
-					resDynasties.add(dynasty.getName());
+			for (String dynasty : refDynastiesList) {
+				if (dynasty.equals("Trịnh Nguyễn Phân Tranh"))
+					resDynasties.add(dynasty);
 			}
 		}
 		String pattern = "(?:Nhà|nhà|triều đại|triều) ([A-ZÀ-Ỹ][a-zà-ỹ]+(?: [A-ZÀ-Ỹ][a-zà-ỹ]+)*)";
@@ -244,10 +245,10 @@ public class HelperFunctions {
 					|| matcher.group(1).contains("Nho") || matcher.group(1).contains("đại"))) {
 				String targetName = matcher.group(1).toLowerCase();
 				boolean found = false;
-				for (Dynasty dynasty : refDynastiesList)
-					if (dynasty.getName().toLowerCase().contains(targetName)) {
+				for (String dynasty : refDynastiesList)
+					if (dynasty.toLowerCase().contains(targetName)) {
 						found = true;
-						resDynasties.add(dynasty.getName());
+						resDynasties.add(dynasty);
 					}
 				if (!found)
 					System.out.println("Unknown: " + HelperFunctions.normalizeString(targetName));
@@ -255,6 +256,34 @@ public class HelperFunctions {
 		}
 		return resDynasties;
 	}
+	
+//	public static ArrayList<String> extractDynasty(String input, ArrayList<Dynasty> refDynastiesList) {
+//		ArrayList<String> resDynasties = new ArrayList<>();
+//		if (input.contains("vua Lê chúa Trịnh")) {
+//			for (Dynasty dynasty : refDynastiesList) {
+//				if (dynasty.getName().equals("Trịnh Nguyễn Phân Tranh"))
+//					resDynasties.add(dynasty.getName());
+//			}
+//		}
+//		String pattern = "(?:Nhà|nhà|triều đại|triều) ([A-ZÀ-Ỹ][a-zà-ỹ]+(?: [A-ZÀ-Ỹ][a-zà-ỹ]+)*)";
+//		Pattern regex = Pattern.compile(pattern);
+//		Matcher matcher = regex.matcher(input);
+//		if (matcher.find()) {
+//			if (!(matcher.group(1).contains("đình") || matcher.group(1).contains("nho")
+//					|| matcher.group(1).contains("Nho") || matcher.group(1).contains("đại"))) {
+//				String targetName = matcher.group(1).toLowerCase();
+//				boolean found = false;
+//				for (Dynasty dynasty : refDynastiesList)
+//					if (dynasty.getName().toLowerCase().contains(targetName)) {
+//						found = true;
+//						resDynasties.add(dynasty.getName());
+//					}
+//				if (!found)
+//					System.out.println("Unknown: " + HelperFunctions.normalizeString(targetName));
+//			}
+//		}
+//		return resDynasties;
+//	}
 
 	public static ArrayList<Figure> decodeFromJson(String filepath) {
 		ArrayList<Figure> resList = new ArrayList<>();
@@ -351,6 +380,40 @@ public class HelperFunctions {
         }
 
         return dynastyList;
+    }
+	
+	public static ArrayList<String> decodeDynastyNamesFromJson(String filepath) {
+		ArrayList<String> resList = new ArrayList<>();
+		JsonParser jParser = new JsonParser();
+		try (FileReader reader = new FileReader(filepath)) {
+			Object obj = jParser.parse(reader);
+			JsonArray dynList = (JsonArray) obj;
+			dynList.forEach(e -> {
+				JsonObject dynObject = (JsonObject) e;
+				if (dynObject.get("name") != null) {
+					resList.add(dynObject.get("name").getAsString());
+				}else {
+					System.out.println("ERROR");
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resList;
+	}
+	
+	public static ArrayList<Event> decodeEventFromJson(String filePath) {
+        ArrayList<Event> eventList = new ArrayList<>();
+
+        try (FileReader reader = new FileReader(filePath)) {
+            Gson gson = new GsonBuilder().create();
+            Type eventListType = new TypeToken<ArrayList<Event>>(){}.getType();
+            eventList = gson.fromJson(reader, eventListType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return eventList;
     }
 
 	public static <T> void encodeListToJson(ArrayList<T> list, String filePath) {

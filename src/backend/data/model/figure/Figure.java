@@ -55,7 +55,7 @@ public class Figure implements IObject {
 		this.home = home; // 5 OK
 		this.desc = desc; // 5 OK
 	}
-	
+
 	public ArrayList<Figure> getFigures() {
 		return null;
 	}
@@ -66,7 +66,7 @@ public class Figure implements IObject {
 
 	@Override
 	public String getName() {
-		return name;
+		return name.replace(name.substring(0, 1), name.substring(0, 1).toUpperCase());
 	}
 
 	public String getOtherName() {
@@ -169,21 +169,22 @@ public class Figure implements IObject {
 
 		return dynastiesString;
 	}
-	
+
 	public String YearToString(int year) {
-		if(year == 0) {
+		if (year == 0) {
 			return "Không rõ";
-		}else if(year < 0) {
-			return (-year) + "TCN";
+		} else if (year < 0) {
+			return (-year) + " TCN";
 		}
-		
-		return year +"";
+
+		return year + "";
 	}
 
 	@Override
 	public String toString() {
-		return "Tên: " + name + "\nTên khác: " + otherName + "\nNăm sinh: " + YearToString(bornYear) + "\nNăm mất: " + YearToString(deathYear)
-				+ "\nCha mẹ: " + parentsToString() + "\nTriều đại: " + dynastiesToString() + "\nQuê quán: " + home;
+		return "Tên: " + name + "\nTên khác: " + otherName + "\nNăm sinh: " + YearToString(bornYear) + "\nNăm mất: "
+				+ YearToString(deathYear) + "\nCha mẹ: " + parentsToString() + "\nTriều đại: " + dynastiesToString()
+				+ "\nQuê quán: " + home;
 	}
 
 }

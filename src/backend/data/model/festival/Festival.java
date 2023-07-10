@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import backend.data.model.IObject;
 import backend.data.model.figure.*;
 
-public class Festival implements IObject{
+public class Festival implements IObject {
 	private String id;
 	private String name;
 	private String place;
@@ -13,8 +13,8 @@ public class Festival implements IObject{
 	private String firstTimes;
 	private String[] relatedCharacter = new String[10];
 	private ArrayList<Figure> relatedCharacterFigure = new ArrayList<Figure>();
-	private ArrayList<String> decription = new ArrayList<String>();
-	
+	private ArrayList<String> description = new ArrayList<String>();
+
 	public Festival() {
 		super();
 	}
@@ -39,20 +39,21 @@ public class Festival implements IObject{
 		this.place = place;
 		this.startTime = startTime;
 	}
-	public Festival(String name, String place, String startTime, String firstTimes, ArrayList<Figure> relatedCharacterFigure, String[] relatedCharacter, 
-			ArrayList<String> decription) {
+
+	public Festival(String name, String place, String startTime, String firstTimes,
+			ArrayList<Figure> relatedCharacterFigure, String[] relatedCharacter, ArrayList<String> description) {
 		super();
 		this.name = name;
 		this.place = place;
 		this.startTime = startTime;
 		this.firstTimes = firstTimes;
 		this.relatedCharacter = relatedCharacter;
-		this.decription = decription;
+		this.description = description;
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return name.replace(name.substring(0, 1), name.substring(0, 1).toUpperCase());
 	}
 
 	public void setName(String name) {
@@ -68,6 +69,9 @@ public class Festival implements IObject{
 	}
 
 	public String getStartTime() {
+		if (startTime.equals("")) {
+			return "Không rõ";
+		}
 		return startTime;
 	}
 
@@ -76,6 +80,9 @@ public class Festival implements IObject{
 	}
 
 	public String getFirstTimes() {
+		if (firstTimes.equals("")) {
+			return "Không rõ";
+		}
 		return firstTimes;
 	}
 
@@ -90,7 +97,7 @@ public class Festival implements IObject{
 	public void setRelatedCharacter(String[] rc) {
 		this.relatedCharacter = rc;
 	}
-	
+
 	public String[] getRelatedCharacter() {
 		return relatedCharacter;
 	}
@@ -99,29 +106,33 @@ public class Festival implements IObject{
 		this.relatedCharacterFigure = rc;
 	}
 
-	public ArrayList<String> getDecription() {
-		return decription;
+	public ArrayList<String> getdescription() {
+		return description;
 	}
-	
+
 	public void addDescription(String a) {
-		decription.add(a);
+		description.add(a);
 	}
-	 
+
 	@Override
 	public String toString() {
-		return "Tên: " + name + "\nĐịa điểm: " + place + "\nThời gian bắt đầu: " + startTime + "\nThời gian tổ chức lần đầu tiên: " + firstTimes;
+		return "Tên: " + name + "\nĐịa điểm: " + place + "\nThời gian bắt đầu: " + getStartTime()
+				+ "\nThời gian tổ chức lần đầu tiên: " + getFirstTimes();
 	}
 
 	@Override
 	public String getDesc() {
 		// TODO Auto-generated method stub
 		String descString = "";
-		
-		for(String desc : getDecription()) {
+
+		for (String desc : getdescription()) {
 			descString += desc + "\n";
 		}
-		
-		return descString;
+
+		return descString.replaceAll(
+				"Trình soạn thảo sẽ tải bây giờ. Nếu một chốc nữa thông điệp này vẫn xuất hiện, xin hãy tải lại trang.",
+				"");
 	}
 
 }
+

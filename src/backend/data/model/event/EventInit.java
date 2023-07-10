@@ -161,9 +161,11 @@ public class EventInit implements IObject{
         this.dynasty = dynasty;
     }
 
-    @Override
     public String getName() {
-        return name;
+    	if(name.substring(0,1).equals(" ")) {
+    		return name.substring(1).replace(name.substring(0, 1), name.substring(0, 1).toUpperCase());
+    	}
+        return name.replace(name.substring(0, 1), name.substring(0, 1).toUpperCase());
     }
 
     public void setName(String name) {

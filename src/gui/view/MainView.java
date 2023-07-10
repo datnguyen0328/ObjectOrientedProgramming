@@ -6,14 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import backend.data.model.*;
-import backend.data.model.dynasty.Dynasty;
-import backend.data.model.festival.Festival;
-import backend.data.model.figure.Figure;
-import backend.data.model.figure.King;
-import backend.data.service.*;
-import backend.data.service.decode.HelperFunctions;
-import backend.data.service.decode.Utils;
 import backend.data.constant.*;
 
 import gui.controller.JMenuController;
@@ -21,11 +13,8 @@ import gui.controller.JMenuController;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -36,46 +25,22 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import java.awt.Insets;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import javax.swing.JTextField;
 
 import java.awt.CardLayout;
-import java.awt.event.FocusAdapter;
 
 public class MainView extends JFrame {
 
 	private JPanel contentPane;
 	private ArrayList<JMenu> jMenus;
+	private ArrayList<JMenuItem> menuItems;
+	private JMenuBar menuBar;
 	private JMenu humanMenu;
 	private JMenu eventMenu;
-	private JMenuBar menuBar;
-	private ArrayList<JMenuItem> menuItems;
 	private JMenu dynastyMenu;
 	private JMenu siteMenu;
 	private JMenu festivalMenu;
-	private JTextField searchTextField;
 	private CardLayout contentCardLayout;
-
 	private ContentPanel contentPanel;
-	
-	private JPanel humanPanel;
-	private JPanel kingPanel;
-	private JPanel poinsettiaPanel;
-	private JPanel eventPanel;
-	private JPanel dynastyPanel;
-	private JPanel festivalPanel;
-	private JPanel relicPanel;
-
-	int index = 0;
-
-	public JPanel getEventPanel() {
-		return eventPanel;
-	}
-
-	public JPanel getHumanPanel() {
-		return humanPanel;
-	}
 
 	public ContentPanel getContentPanel() {
 		return contentPanel;
@@ -118,6 +83,7 @@ public class MainView extends JFrame {
 				try {
 					MainView frame = new MainView();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 					frame.setJMenuBar(null);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -136,11 +102,11 @@ public class MainView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(new BorderLayout());
 
 		JPanel mainPanel = new JPanel();
 		contentPane.add(mainPanel, BorderLayout.CENTER);
-		mainPanel.setLayout(new BorderLayout(0, 0));
+		mainPanel.setLayout(new BorderLayout());
 
 		// menu
 		JPanel menuPanel = new JPanel();
@@ -151,7 +117,7 @@ public class MainView extends JFrame {
 
 		JLabel menuLabel = new JLabel("LỊCH SỬ");
 		menuLabel.setBorder(new EmptyBorder(0, 0, 0, 40));
-		menuLabel.setIcon(new ImageIcon(MainView.class.getResource("/gui/icon/history48.png")));
+		menuLabel.setIcon(new ImageIcon(Constant.HISTORY_ICON));
 		menuLabel.setForeground(Color.WHITE);
 		menuLabel.setFont(new Font("SansSerif", Font.BOLD, 28));
 		menuPanel.add(menuLabel, BorderLayout.WEST);
@@ -270,32 +236,38 @@ public class MainView extends JFrame {
 		jMenus.add(siteMenu);
 		jMenus.add(eventMenu);
 		jMenus.add(festivalMenu);
-		
-		//content panel
+
+		// content panel
 		contentCardLayout = new CardLayout();
 		contentPanel = new ContentPanel(contentCardLayout);
+		contentPanel.setBackground(new Color(255, 255, 255));
+		contentPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
 		mainPanel.add(contentPanel, BorderLayout.CENTER);
-		
-		//searchPanel
+
+		// searchPanel
 		SearchPanel searchPanel = new SearchPanel(contentPanel);
-		menuPanel.add(searchPanel,BorderLayout.EAST);
-		
+		menuPanel.add(searchPanel, BorderLayout.EAST);
+
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(null);
+		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setPreferredSize(new Dimension(70, 10));
 		mainPanel.add(panel_1, BorderLayout.EAST);
-		
+
 		JPanel panel = new JPanel();
+		panel.setBorder(null);
+		panel.setBackground(new Color(255, 255, 255));
 		panel.setPreferredSize(new Dimension(70, 10));
 		mainPanel.add(panel, BorderLayout.WEST);
 
 		addWindowFocusListener(new WindowFocusListener() {
-			
+
 			@Override
 			public void windowLostFocus(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void windowGainedFocus(WindowEvent e) {
 				// TODO Auto-generated method stub
@@ -320,8 +292,3 @@ public class MainView extends JFrame {
 		jMenu.setForeground(new Color(255, 255, 255));
 	}
 }
-
-
-
-
-

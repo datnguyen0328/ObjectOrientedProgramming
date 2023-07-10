@@ -2,21 +2,24 @@ package gui.view;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.border.LineBorder;
 
 import backend.data.constant.Constant;
 import backend.data.model.dynasty.Dynasty;
-import backend.data.model.event.EventInit;
+import backend.data.model.event.Event;
 import backend.data.model.festival.Festival;
 import backend.data.model.figure.Figure;
 import backend.data.model.relic.Relic;
 import backend.data.service.decode.Decode;
-import backend.data.service.decode.EventDecode;
 import backend.data.service.decode.HelperFunctions;
 import backend.data.service.decode.Utils;
 
@@ -37,14 +40,18 @@ public class ContentPanel extends JPanel {
 	private JPanel festivalPanel;
 	private JPanel relicPanel;
 	private ArrayList<Figure> figures;
-	private JTextPane searchTextPane;
-	private JTextPane searchLandingTextPane;
+	private JTextArea searchTextArea;
+	private JTextArea searchLandingTextArea;
 	private JPanel searchLandingContainerPanel;
 	private ArrayList<Dynasty> dynasties;
 	private ArrayList<Festival> festivals;
 	private ArrayList<Relic> relics;
-	private ArrayList<EventInit> events;
-	
+	private ArrayList<Event> events;
+
+	public ArrayList<Event> getEvents() {
+		return events;
+	}
+
 	public ArrayList<Dynasty> getDynasties() {
 		return dynasties;
 	}
@@ -65,16 +72,16 @@ public class ContentPanel extends JPanel {
 		this.searchLandingPanel = searchLandingPanel;
 	}
 
-	public JTextPane getSearchLandingTextPane() {
-		return searchLandingTextPane;
+	public JTextArea getSearchLandingTextArea() {
+		return searchLandingTextArea;
 	}
 
 	public JPanel getSearchLandingContainerPanel() {
 		return searchLandingContainerPanel;
 	}
 
-	public JTextPane getSearchTextPane() {
-		return searchTextPane;
+	public JTextArea getSearchTextArea() {
+		return searchTextArea;
 	}
 
 	public ArrayList<Figure> getFigures() {
@@ -146,10 +153,10 @@ public class ContentPanel extends JPanel {
 
 		// relic
 		add(createRelicContentPanel(), "relicPanel");
-		
-		//searchLandingPanel
+
+		// searchLandingPanel
 		add(createSearchLandingPanel(), "searchLandingPanel");
-		
+
 		// searchPanel
 		add(createSearchResultPanel(), "searchResultPanel");
 	}
@@ -158,8 +165,13 @@ public class ContentPanel extends JPanel {
 		searchLandingPanel = new JPanel();
 		searchLandingPanel.setLayout(new BorderLayout());
 
-		searchLandingTextPane = new JTextPane();
-		searchLandingPanel.add(searchLandingTextPane, BorderLayout.NORTH);
+		searchLandingTextArea = new JTextArea();
+		searchLandingTextArea.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		searchLandingTextArea.setLineWrap(true);
+		searchLandingTextArea.setWrapStyleWord(true);
+		searchLandingTextArea.setEditable(false);
+		
+		searchLandingPanel.add(searchLandingTextArea, BorderLayout.NORTH);
 
 		return searchLandingPanel;
 	}
@@ -167,9 +179,18 @@ public class ContentPanel extends JPanel {
 	public JPanel createSearchResultPanel() {
 		searchResultPanel = new JPanel();
 		searchResultPanel.setLayout(new BorderLayout());
+		searchResultPanel.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 
-		searchTextPane = new JTextPane();
-		searchResultPanel.add(searchTextPane, BorderLayout.CENTER);
+		searchTextArea = new JTextArea();
+		searchTextArea.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		searchTextArea.setLineWrap(true);
+		searchTextArea.setWrapStyleWord(true);
+		searchTextArea.setEditable(false);
+		
+		JScrollPane searchTextAreaJScrollPane = new JScrollPane(searchTextArea);
+		
+		searchResultPanel.add(searchTextAreaJScrollPane, BorderLayout.CENTER);
+		
 		return searchResultPanel;
 	}
 
@@ -177,6 +198,7 @@ public class ContentPanel extends JPanel {
 		index = 0;
 		humanPanel = new JPanel();
 		humanPanel.setLayout(new BorderLayout());
+		setFontStyleForComponents(humanPanel);
 
 		figures = HelperFunctions.decodeFromJson(Constant.FIGURE_FILE_NAME);
 
@@ -185,6 +207,7 @@ public class ContentPanel extends JPanel {
 		humanPanel.add(humanContainerPanel, BorderLayout.CENTER);
 
 		ButtonsPanel figureButtonsPanel = new ButtonsPanel(humanCardLayout, humanContainerPanel);
+		figureButtonsPanel.setBackground(new Color(255, 255, 255));
 		figureButtonsPanel.setPreferredSize(new Dimension(10, 45));
 		humanPanel.add(figureButtonsPanel, BorderLayout.SOUTH);
 
@@ -199,10 +222,11 @@ public class ContentPanel extends JPanel {
 		ArrayList<Figure> kings = HelperFunctions.decodeFromJson(Constant.KING_FILE_NAME);
 
 		CardLayout kingCardLayout = new CardLayout();
-		ContainerPanel kingContainerPanel = new ContainerPanel(kingCardLayout, 3, kings);
+		ContainerPanel kingContainerPanel = new ContainerPanel(kingCardLayout, 5, kings);
 		kingPanel.add(kingContainerPanel, BorderLayout.CENTER);
 
 		ButtonsPanel kingButtonsPanel = new ButtonsPanel(kingCardLayout, kingContainerPanel);
+		kingButtonsPanel.setBackground(new Color(255, 255, 255));
 		kingButtonsPanel.setPreferredSize(new Dimension(10, 45));
 		kingPanel.add(kingButtonsPanel, BorderLayout.SOUTH);
 
@@ -220,6 +244,7 @@ public class ContentPanel extends JPanel {
 		poinsettiaPanel.add(poinsettiaContainerPanel, BorderLayout.CENTER);
 
 		ButtonsPanel poinsettiaButtonsPanel = new ButtonsPanel(poinsettiaCardLayout, poinsettiaContainerPanel);
+		poinsettiaButtonsPanel.setBackground(new Color(255, 255, 255));
 		poinsettiaButtonsPanel.setPreferredSize(new Dimension(10, 45));
 		poinsettiaPanel.add(poinsettiaButtonsPanel, BorderLayout.SOUTH);
 
@@ -237,6 +262,7 @@ public class ContentPanel extends JPanel {
 		dynastyPanel.add(dynastyContainerPanel, BorderLayout.CENTER);
 
 		ButtonsPanel dynastyButtonsPanel = new ButtonsPanel(dynastyCardLayout, dynastyContainerPanel);
+		dynastyButtonsPanel.setBackground(new Color(255, 255, 255));
 		dynastyButtonsPanel.setPreferredSize(new Dimension(10, 45));
 		dynastyPanel.add(dynastyButtonsPanel, BorderLayout.SOUTH);
 
@@ -254,6 +280,7 @@ public class ContentPanel extends JPanel {
 		festivalPanel.add(festivalContainerPanel, BorderLayout.CENTER);
 
 		ButtonsPanel festivalButtonsPanel = new ButtonsPanel(festivalCardLayout, festivalContainerPanel);
+		festivalButtonsPanel.setBackground(new Color(255, 255, 255));
 		festivalButtonsPanel.setPreferredSize(new Dimension(10, 45));
 		festivalPanel.add(festivalButtonsPanel, BorderLayout.SOUTH);
 
@@ -272,25 +299,35 @@ public class ContentPanel extends JPanel {
 		relicPanel.add(relicContainerPanel, BorderLayout.CENTER);
 
 		ButtonsPanel relicButtonsPanel = new ButtonsPanel(relicCardLayout, relicContainerPanel);
+		relicButtonsPanel.setBackground(new Color(255, 255, 255));
 		relicButtonsPanel.setPreferredSize(new Dimension(10, 45));
 		relicPanel.add(relicButtonsPanel, BorderLayout.SOUTH);
 		return relicPanel;
 	}
-	
+
 	public JPanel createEventContentPanel() {
 		index = 0;
 		eventPanel = new JPanel();
 		eventPanel.setLayout(new BorderLayout());
 
-		events = EventDecode.decode(Constant.EVENT_FILE_NAME);
+		events = HelperFunctions.decodeEventFromJson(Constant.EVENT_FILE_NAME);
 
 		CardLayout eventCardLayout = new CardLayout();
 		ContainerPanel eventContainerPanel = new ContainerPanel(eventCardLayout, 10, events);
 		eventPanel.add(eventContainerPanel, BorderLayout.CENTER);
 
 		ButtonsPanel eventButtonsPanel = new ButtonsPanel(eventCardLayout, eventContainerPanel);
+		eventButtonsPanel.setBackground(new Color(255, 255, 255));
 		eventButtonsPanel.setPreferredSize(new Dimension(10, 45));
 		eventPanel.add(eventButtonsPanel, BorderLayout.SOUTH);
 		return eventPanel;
+	}
+
+	public void setFontStyleForComponents(JPanel jPanel) {
+		Font font = new Font("Monospace", Font.PLAIN, 16);
+
+		for (Component component : jPanel.getComponents()) {
+			component.setFont(font);
+		}
 	}
 }

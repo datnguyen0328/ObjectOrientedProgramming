@@ -25,7 +25,7 @@ public class Dynasty implements IObject {
 		this.endYear = endYear;
 		this.desc = desc;
 	}
-	
+
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
@@ -45,14 +45,14 @@ public class Dynasty implements IObject {
 	public Dynasty(String name) {
 		this.name = name;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return name.replace(name.substring(0, 1), name.substring(0, 1).toUpperCase());
 	}
 
 	public int getStartYear() {
@@ -76,9 +76,19 @@ public class Dynasty implements IObject {
 		figures.add(fig);
 	}
 
+	public String YearToString(int year) {
+		if (year == 0) {
+			return "Không rõ";
+		} else if (year < 0) {
+			return (-year) + " TCN";
+		}
+
+		return year + "";
+	}
+
 	@Override
 	public String toString() {
-		return "Tên triều đại: " + name + "\nNăm bắt đầu:" + startYear + "\nNăm kết thúc:" + endYear
-				;
+		return "Tên triều đại: " + name + "\nNăm bắt đầu: " + YearToString(startYear) + "\nNăm kết thúc: "
+				+ YearToString(endYear);
 	}
 }

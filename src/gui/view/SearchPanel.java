@@ -17,16 +17,15 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import backend.data.constant.Constant;
 import backend.data.model.IObject;
-import backend.data.model.dynasty.Dynasty;
-import backend.data.model.festival.Festival;
-import backend.data.model.figure.Figure;
-import backend.data.model.relic.Relic;
+import gui.component.RoundedJTextField;
 
 public class SearchPanel extends JPanel {
 	private ContentPanel contentPanel;
@@ -56,7 +55,7 @@ public class SearchPanel extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				if (searchTextField.getText().equals(" Tìm kiếm")) {
-					searchTextField.setText(null);
+					searchTextField.setText(" ");
 					searchTextField.requestFocus();
 					removePlaceHolderStyle(searchTextField);
 				}
@@ -89,19 +88,21 @@ public class SearchPanel extends JPanel {
 					addSearchLandingPanel(searchString, searchObject(searchString, contentPanel.getRelics()), contentPanel);
 				}else if(currentPanel.equals(Constant.FESTIVAL_PANEL_NAME)) {
 					addSearchLandingPanel(searchString, searchObject(searchString, contentPanel.getFestivals()), contentPanel);
+				}else if(currentPanel.equals(Constant.EVENT_PANEL_NAME)) {
+					addSearchLandingPanel(searchString, searchObject(searchString, contentPanel.getEvents()), contentPanel);
 				}
 			}
 		});
 
 		JLabel searchLabel = new JLabel("");
 		searchLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		searchLabel.setIcon(new ImageIcon(MainView.class.getResource("/gui/icon/icons8-search-32.png")));
+		searchLabel.setIcon(new ImageIcon(Constant.SEARCH_ICON));
 		searchLabel.setBounds(0, 11, 29, 33);
 		add(searchLabel);
 	}
 
 	public <T> void addSearchLandingPanel(String searchString, ArrayList<T> objects, ContentPanel contentPanel) {
-		contentPanel.getSearchLandingTextPane().setText("Kết quả tìm kiếm cho \"" + searchString + "\":");
+		contentPanel.getSearchLandingTextArea().setText("Kết quả tìm kiếm cho \"" + searchString + "\":");
 
 		// remove searchLandingPanel's center component
 		BorderLayout searchLandingPanelLayout = (BorderLayout) contentPanel.getSearchLandingPanel().getLayout();
@@ -112,19 +113,20 @@ public class SearchPanel extends JPanel {
 
 		JPanel searchLandingContainerPanel = new JPanel();
 		searchLandingContainerPanel.setLayout(new GridLayout(objects.size(), 1));
-		contentPanel.getSearchLandingPanel().add(searchLandingContainerPanel, BorderLayout.CENTER);
+		
+		JScrollPane searchLandingContainerJScrollPane = new JScrollPane(searchLandingContainerPanel);
+		contentPanel.getSearchLandingPanel().add(searchLandingContainerJScrollPane, BorderLayout.CENTER);
 		for (T object : objects) {
 			JLabel resultJLabel = new JLabel(((IObject) object).getName());
+			resultJLabel.setFont(new Font("SansSerif", Font.BOLD, 13));
 			resultJLabel.addMouseListener(new MouseListener() {
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					// TODO Auto-generated method stub
 
-					contentPanel.getSearchTextPane().setText(object.toString() + "\n" + ((IObject) object).getDesc());
+					contentPanel.getSearchTextArea().setText(object.toString().replaceAll("null", "Không rõ").replace("Trình soạn thảo sẽ tải bây giờ. Nếu một chốc nữa thông điệp này vẫn xuất hiện, xin hãy tải lại trang.", "") + "\n" + ((IObject) object).getDesc());
 					contentPanel.getContentCardLayout().show(contentPanel, "searchResultPanel");
-					System.out.println(contentPanel.getSearchTextPane().getText());
-					System.out.println("mouse released");
 				}
 
 				@Override
@@ -170,6 +172,19 @@ public class SearchPanel extends JPanel {
 		font = font.deriveFont(Font.PLAIN | Font.BOLD);
 		textField.setFont(font);
 		textField.setForeground(Color.black);
+	}
+	
+	public void setStyleJTextArea(JTextArea jTextArea) {
+		jTextArea.setFont(new Font("SansSerif", Font.PLAIN, 13));
+
+		jTextArea.setLineWrap(true);
+		jTextArea.setWrapStyleWord(true);
+		jTextArea.setEditable(false);
+	}
+
+	public void setStyleJLabel(JLabel jLabel) {
+		jLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+		jLabel.setForeground(new Color(9, 15, 57));
 	}
 
 	public <T> ArrayList<T> searchObject(String inputString, ArrayList<T> objects) {

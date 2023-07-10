@@ -10,9 +10,13 @@ public class Constant {
 	public static final String RELIC_FILE_NAME = "D:\\OOPProjectTest\\src\\backend\\data\\file\\relics.json";
 	public static final String EVENT_FILE_NAME = "D:\\OOPProjectTest\\src\\backend\\data\\file\\events.json";
 	
+	//icon
+	public static final String BACK_ICON = "D://OOPProjectTest//src//gui//icon//back.png";
+	public static final String HISTORY_ICON = "D://OOPProjectTest//src//gui//icon//history.png";
+	public static final String SEARCH_ICON = "D://OOPProjectTest//src//gui//icon//search.png";
+	
 	//panel
 	public static final String HUMAN_PANEL_NAME = "humanPanel";
-	
 	public static final String KING_PANEL_NAME = "kingPanel";
 	public static final String POINSETTIA_PANEL_NAME = "poinsettiaPanel";
 	public static final String EVENT_PANEL_NAME = "eventPanel";
