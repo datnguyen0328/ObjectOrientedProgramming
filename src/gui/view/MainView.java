@@ -18,6 +18,8 @@ import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.ImageIcon;
@@ -25,7 +27,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import java.awt.Insets;
-
+import java.awt.Toolkit;
 import java.awt.CardLayout;
 
 public class MainView extends JFrame {
@@ -82,6 +84,9 @@ public class MainView extends JFrame {
 			public void run() {
 				try {
 					MainView frame = new MainView();
+					Image icon = Toolkit.getDefaultToolkit().getImage(Constant.VIETNAM_ICON);    
+					frame.setIconImage(icon);  
+					frame.setTitle("SỬ VIỆT");
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 					frame.setJMenuBar(null);
@@ -248,17 +253,17 @@ public class MainView extends JFrame {
 		SearchPanel searchPanel = new SearchPanel(contentPanel);
 		menuPanel.add(searchPanel, BorderLayout.EAST);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(null);
-		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setPreferredSize(new Dimension(70, 10));
-		mainPanel.add(panel_1, BorderLayout.EAST);
+		JPanel westPanel = new JPanel();
+		westPanel.setBorder(null);
+		westPanel.setBackground(new Color(108, 125, 253));
+		westPanel.setPreferredSize(new Dimension(70, 10));
+		mainPanel.add(westPanel, BorderLayout.EAST);
 
-		JPanel panel = new JPanel();
-		panel.setBorder(null);
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setPreferredSize(new Dimension(70, 10));
-		mainPanel.add(panel, BorderLayout.WEST);
+		JPanel eastPanel = new JPanel();
+		eastPanel.setBorder(null);
+		eastPanel.setBackground(new Color(108, 125, 253));
+		eastPanel.setPreferredSize(new Dimension(70, 10));
+		mainPanel.add(eastPanel, BorderLayout.WEST);
 
 		addWindowFocusListener(new WindowFocusListener() {
 

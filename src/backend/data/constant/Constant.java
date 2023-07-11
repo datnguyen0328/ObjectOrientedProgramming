@@ -14,6 +14,7 @@ public class Constant {
 	public static final String BACK_ICON = "D://OOPProjectTest//src//gui//icon//back.png";
 	public static final String HISTORY_ICON = "D://OOPProjectTest//src//gui//icon//history.png";
 	public static final String SEARCH_ICON = "D://OOPProjectTest//src//gui//icon//search.png";
+	public static final String VIETNAM_ICON = "D://OOPProjectTest//src//gui//icon//vietnam.png";
 	
 	//panel
 	public static final String HUMAN_PANEL_NAME = "humanPanel";

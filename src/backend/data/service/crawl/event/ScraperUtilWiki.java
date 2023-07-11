@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import backend.data.service.crawl.event.*;
-
 public class ScraperUtilWiki {
     private static final List<EventInit> eventList = new ArrayList<>();
 
